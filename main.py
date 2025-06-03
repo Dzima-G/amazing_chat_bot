@@ -6,6 +6,8 @@ from telegram import ForceReply, Update
 from telegram.ext import (CallbackContext, CommandHandler, Filters,
                           MessageHandler, Updater)
 
+from dialog_flow_api import detect_intent_texts
+
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
@@ -29,7 +31,14 @@ def help_command(update: Update, context: CallbackContext) -> None:
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
-    update.message.reply_text(update.message.text)
+
+    answer = detect_intent_texts(
+        project_id,
+        update.message.from_user.id,
+        update.message.text,
+        language_code)
+
+    update.message.reply_text(answer)
 
 
 def main() -> None:
@@ -52,4 +61,7 @@ if __name__ == '__main__':
     load_dotenv()
     tg_token = os.environ['TELEGRAM_TOKEN']
     tg_chat_id = os.environ['TG_CHAT_ID']
+    language_code = os.getenv('LANGUAGE_CODE', 'ru-RU')
+    project_id = os.environ['PROJECT_GOOGLE_CLOUD_ID']
+
     main()
