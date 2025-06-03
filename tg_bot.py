@@ -38,7 +38,7 @@ def echo(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(answer)
 
 
-def run_bot(tg_token, project_id, language_code) -> None:
+def run_tg_bot(tg_token, project_id, language_code) -> None:
     """Start the bot."""
 
     logging.basicConfig(

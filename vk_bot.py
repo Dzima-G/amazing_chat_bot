@@ -1,23 +1,32 @@
 import vk_api
-from vk_api.longpoll import VkLongPoll, VkEventType
-import os
+from vk_api.exceptions import ApiError
+from vk_api.longpoll import VkEventType, VkLongPoll
 
-from dotenv import load_dotenv
+from dialog_flow_api import detect_intent_texts
 
-if __name__ == '__main__':
-    load_dotenv()
 
-    vk_token = os.getenv('VK_TOKEN')
-
+def run_vk_bot(vk_token, project_id, language_code):
     vk_session = vk_api.VkApi(token=vk_token)
+    vk = vk_session.get_api()
 
     longpoll = VkLongPoll(vk_session)
 
     for event in longpoll.listen():
+
         if event.type == VkEventType.MESSAGE_NEW:
-            print('Новое сообщение:')
             if event.to_me:
-                print('Для меня от: ', event.user_id)
-            else:
-                print('От меня для: ', event.user_id)
-            print('Текст:', event.text)
+                answer = detect_intent_texts(
+                    project_id,
+                    event.user_id,
+                    event.text,
+                    language_code
+                )
+
+                try:
+                    vk.messages.send(
+                        user_id=event.user_id,
+                        message=answer,
+                        random_id=0
+                    )
+                except ApiError as api_err:
+                    continue
