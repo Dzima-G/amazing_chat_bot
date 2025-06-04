@@ -42,7 +42,7 @@ if __name__ == '__main__':
     load_dotenv()
     project_id = os.environ['PROJECT_GOOGLE_CLOUD_ID']
 
-    with open('intent/intent_1.json', 'r', encoding='utf-8') as my_file:
+    with open('intent/intents.json', 'r', encoding='utf-8') as my_file:
         intents_data = json.load(my_file)
 
     for display_name, item in intents_data.items():
@@ -50,8 +50,8 @@ if __name__ == '__main__':
         message_texts = [item.get('answer', '')]
 
         create_intent(
-            project_id=project_id,
-            display_name=display_name,
-            training_phrases_parts=training_phrases_parts,
-            message_texts=message_texts,
+            project_id,
+            display_name,
+            training_phrases_parts,
+            message_texts,
         )

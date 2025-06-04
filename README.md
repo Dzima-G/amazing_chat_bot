@@ -42,7 +42,7 @@ python create_api_key.py
 - `PROJECT_GOOGLE_CLOUD_ID` - id приложения GoogleCloud: `ru-RU` См. документацию https://cloud.google.com/dialogflow/es/docs/quick/build-agent
 - `GOOGLE_APPLICATION_CREDENTIALS` - путь к файлу `application_default_credentials.json`, см. документацию https://cloud.google.com/dialogflow/es/docs/quick/setup
 - `LANGUAGE_CODE` - язык обработки запросов агента DialogFlow: `ru-RU` См. документацию https://cloud.google.com/dialogflow/es/docs/quick/build-agent
-- `VK_TOKEN` - токен выглядит например: `vk1.a.XxBH4zwP0Ak7vdiSpKWRH6FwWE59LuwTnoFHsReYRt9tQmtiRYrLwyb9kylLp27YHninApFuyRi-MLMXtSnV6Bb3nCutvq27jCv82Yn6bKbeDsVCfhQi3gxxSXKxWslNROWFWyN7S3pDWUqscB5OX_wXXtdMn_p4KE-9nUeWaKr-2uCo2Yyj65_4IAmT9jZ0NKKxPfnnxsxkAHsJho33uw`. См. документацию https://dev.vk.com/ru/api/access-token/community-token/in-community-settings
+- `VK_TOKEN` - токен выглядит например: `vk1.a.XxBH4zwP0Ak1eriSpKWRH6FwWE59LugTklFHsReYRt9tQehjRYrLwyb8kylLp27YHninApFuyRi-MLMXtSnV6Bb3nCutvq27jCv82Yn6bKbeDsVCfhQi3gxxSXKxWslNROWFWyN7S3pDWUqscB5OX_wXXtdMn_p4KE-9nUeWaKr-2uCo2Yyj65_4IAmT9jZ0NKKxPfnnxsxkAHsJho33uw`. См. документацию https://dev.vk.com/ru/api/access-token/community-token/in-community-settings
 
 
 ### Применение
@@ -51,6 +51,16 @@ python create_api_key.py
 Для запуска скрипта:
 ```sh
 python main.py
+```
+
+#### Добавить намерения (intent):
+Для добавления intent можно воспользоваться скриптом `add_intent_dialogflow.py`
+Необходим json файл установленного образца, см. пример `intent/intents.json`
+
+Для запуска скрипта:
+
+```sh
+python add_intent_dialogflow.py
 ```
 
 ### Цель проекта
