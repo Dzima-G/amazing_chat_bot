@@ -38,6 +38,7 @@ python create_api_key.py
 ```
 Обязательные переменные окружения:
 - `TELEGRAM_TOKEN` - токен выглядит например: `6000000001:ADEeVTKrhmLSBouDAjhT0r9tBG-AW5VU9YG`. См. документацию https://core.telegram.org/bots/faq#how-do-i-create-a-bot
+- `ERROR_TELEGRAM_TOKEN` - (бот для отправки ошибок) токен выглядит например: `6000000001:ADEeVTKrhmLSBouDAjhT0r9tBG-AW5VU9YG`. См. документацию https://core.telegram.org/bots/faq#how-do-i-create-a-bot
 - `TELEGRAM_CHAT_ID` - (бот для уведомлений) выглядит например: `1000001234567` Напишите в Telegram специальному боту: https://telegram.me/userinfobot
 - `PROJECT_GOOGLE_CLOUD_ID` - id приложения GoogleCloud: `ru-RU` См. документацию https://cloud.google.com/dialogflow/es/docs/quick/build-agent
 - `GOOGLE_APPLICATION_CREDENTIALS` - путь к файлу `application_default_credentials.json`, см. документацию https://cloud.google.com/dialogflow/es/docs/quick/setup
