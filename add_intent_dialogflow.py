@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 
@@ -14,7 +15,7 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
     training_phrases = []
     for training_phrases_part in training_phrases_parts:
         part = dialogflow.Intent.TrainingPhrase.Part(text=training_phrases_part)
-        # Here we create a new training phrase for each provided part.
+
         training_phrase = dialogflow.Intent.TrainingPhrase(parts=[part])
         training_phrases.append(training_phrase)
 
@@ -27,31 +28,55 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
         messages=[message]
     )
 
-    try:
-        response = intents_client.create_intent(
-            request={"parent": parent, "intent": intent}
-        )
+    response = intents_client.create_intent(
+        request={"parent": parent, "intent": intent}
+    )
 
-        print("Intent created: {}".format(response))
-    except Exception as e:
-        print(f"Ошибка при создании intent '{display_name}': {e}")
+    return f'Добавлен intent: {response.display_name}'
 
 
 if __name__ == '__main__':
 
     load_dotenv()
     project_id = os.environ['PROJECT_GOOGLE_CLOUD_ID']
+    env_local_path = os.getenv('LOCAL_PATH', None)
 
-    with open('intent/intents.json', 'r', encoding='utf-8') as my_file:
+    parser_local_path = argparse.ArgumentParser(
+        description='Введите путь к файлу c intent (намерения), например: intent/intents.json'
+    )
+    parser_local_path.add_argument(
+        'local_path',
+        type=str,
+        nargs='?',
+        default=None,
+        help='Путь к файлу с intent'
+    )
+
+    args = parser_local_path.parse_args()
+
+    if args.local_path is not None:
+        local_path = args.local_path
+    elif env_local_path is not None:
+        local_path = env_local_path
+    else:
+        local_path = 'intent/intents.json'
+
+    with open(local_path, 'r', encoding='utf-8') as my_file:
         intents_data = json.load(my_file)
 
     for display_name, item in intents_data.items():
         training_phrases_parts = item.get('questions', [])
         message_texts = [item.get('answer', '')]
 
-        create_intent(
-            project_id,
-            display_name,
-            training_phrases_parts,
-            message_texts,
-        )
+        try:
+            response = create_intent(
+                project_id,
+                display_name,
+                training_phrases_parts,
+                message_texts,
+            )
+
+            print(response)
+
+        except Exception as e:
+            print(f"Ошибка при создании intent '{display_name}': {e}")

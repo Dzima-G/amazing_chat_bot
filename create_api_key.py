@@ -1,3 +1,4 @@
+import argparse
 import os
 
 from dotenv import load_dotenv
@@ -20,30 +21,44 @@ def create_api_key(project_id: str, suffix: str) -> Key:
     Returns:
         response: Returns the created API Key.
     """
-    # Create the API Keys client.
     client = api_keys_v2.ApiKeysClient()
 
     key = api_keys_v2.Key()
     key.display_name = f"API key - {suffix}"
 
-    # Initialize request and set arguments.
     request = api_keys_v2.CreateKeyRequest()
     request.parent = f"projects/{project_id}/locations/global"
     request.key = key
 
-    # Make the request and wait for the operation to complete.
     response = client.create_key(request=request).result()
 
-    print(f"Successfully created an API key: {response.name}")
-    # For authenticating with the API key, use the value in "response.key_string".
-    # To restrict the usage of this API key, use the value in "response.name".
     return response
 
 
 if __name__ == '__main__':
     load_dotenv()
     project_id = os.environ['PROJECT_GOOGLE_CLOUD_ID']
-    suffix = 'amazing-chat-bot'
+    env_suffix = os.getenv('SUFFIX', None)
 
-    key_obj = create_api_key(project_id, suffix)
-    print(key_obj)
+    parser_suffix = argparse.ArgumentParser(
+        description='Введите суффикс к названию ключа (например: amazing-chat-bot).'
+    )
+    parser_suffix.add_argument(
+        'suffix',
+        type=str,
+        nargs='?',
+        default=None,
+        help='Суффикс к названию ключа'
+    )
+
+    args = parser_suffix.parse_args()
+
+    if args.suffix is not None:
+        suffix = args.suffix
+    elif env_suffix is not None:
+        suffix = env_suffix
+    else:
+        suffix = 'amazing-chat-bot'
+
+    response = create_api_key(project_id, suffix)
+    print(f"Успешно создан API key: {response.name}")
