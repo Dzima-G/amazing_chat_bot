@@ -61,8 +61,8 @@ if __name__ == '__main__':
     else:
         local_path = 'intent/intents.json'
 
-    with open(local_path, 'r', encoding='utf-8') as my_file:
-        intents_data = json.load(my_file)
+    with open(local_path, 'r', encoding='utf-8') as data:
+        intents_data = json.load(data)
 
     for display_name, item in intents_data.items():
         training_phrases_parts = item.get('questions', [])

@@ -40,10 +40,10 @@ if __name__ == '__main__':
     project_id = os.environ['PROJECT_GOOGLE_CLOUD_ID']
     env_suffix = os.getenv('SUFFIX', None)
 
-    parser_suffix = argparse.ArgumentParser(
+    suffix_parser = argparse.ArgumentParser(
         description='Введите суффикс к названию ключа (например: amazing-chat-bot).'
     )
-    parser_suffix.add_argument(
+    suffix_parser.add_argument(
         'suffix',
         type=str,
         nargs='?',
@@ -51,7 +51,7 @@ if __name__ == '__main__':
         help='Суффикс к названию ключа'
     )
 
-    args = parser_suffix.parse_args()
+    args = suffix_parser.parse_args()
 
     if args.suffix is not None:
         suffix = args.suffix

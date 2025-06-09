@@ -1,6 +1,8 @@
 from google.api_core.exceptions import GoogleAPICallError, RetryError
 from google.cloud import dialogflow
+import logging
 
+logger = logging.getLogger(__name__)
 
 def detect_intent_response(project_id: str, session_id: str, text: str, language_code: str):
     """Returns the result of detect intent with texts as inputs.
@@ -22,4 +24,5 @@ def detect_intent_response(project_id: str, session_id: str, text: str, language
         return response
 
     except (GoogleAPICallError, RetryError) as e:
-        return 'Я временно не могу отвечать, прошу прощения.'
+        logger.exception(f'Ошибка API DialogFlow: {e}')
+        pass
