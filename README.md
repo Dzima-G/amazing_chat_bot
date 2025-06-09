@@ -101,12 +101,6 @@ Dialogflow https://dialogflow.cloud.google.com/
 
 Скрипт работает из консольной утилиты.
 
-Для запуска ботов VK и Telegram одновременно используйте скрипт:
-
-```sh
-python main.py
-```
-
 Для запуска бота Telegram используйте скрипт:
 
 ```sh
